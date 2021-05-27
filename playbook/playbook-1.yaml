@@ -7,13 +7,24 @@
       name: nginx
       state: present
       update_cache: true
-  
+    register: nignx_time
+    #failed_when: nignx_time.cache_update_time > 1
+
+  - name: check install
+    debug:
+      msg: "{{ nignx_time }}"
+
+  - name: Start nginx
+    service:
+      name: nginx
+      state: started
+
   - name: Copy nginx file over
     copy:
       src: nginx.conf
       dest: /etc/nginx/nginx.conf
     register: nginx_config
-    failed_when: nginx_config.diff.before == nginx_config.diff.after
+    #failed_when: nginx_config.diff.before.path == nginx_config.diff.after.path
   
   - name: check copy
     debug:
