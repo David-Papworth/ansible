@@ -13,6 +13,10 @@
       src: nginx.conf
       dest: /etc/nginx/nginx.conf
     register: nginx_config
+  
+  - name: check copy
+    debug:
+      msg: "{{ nginx_config }}"
 
   - name: Restart nginx if needed
     service:
