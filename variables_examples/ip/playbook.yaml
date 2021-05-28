@@ -1,0 +1,19 @@
+- hosts: all
+  become: true     
+  tasks:
+  - name: setup
+    setup: 
+    register: facts
+  - name: printing info to console
+    debug:
+      msg: "{{ facts.ansible_facts.ansible_all_ipv4_addresses }}"
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /home/pappy/test_file
+      state: directory
+      mode: '0755'
+  - name: Add a line to a file if the file does not exist, without passing regexp
+    ansible.builtin.lineinfile:
+      path: /home/pappy/test_file/adress
+      line: "{{ facts.ansible_facts.ansible_all_ipv4_addresses }}"
+      create: yes
