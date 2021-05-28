@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+  vars:                                                               
+    repo_position: https://github.com/David-Papworth/ansible.git
+  tasks:
+  - name: Clone git repo
+    ansible.builtin.git:
+      repo: "{{repo_position}}" 
+      dest: /home/pappy/git
