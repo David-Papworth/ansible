@@ -1,0 +1,13 @@
+- hosts: all
+  become: true     
+  tasks:
+  - name: setup
+    setup: 
+    register: facts
+  - name: printing info to console
+    debug:
+      msg: "{{ facts.ansible_facts.ansible_lsb.id }}"
+  - name: Print the gateway for each host when defined
+    ansible.builtin.debug:
+      msg: This is a Ubuntu machne
+    when: facts.ansible_facts.ansible_lsb.id == "Ubuntu"
